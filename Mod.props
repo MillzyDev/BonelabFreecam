@@ -1,0 +1,15 @@
+<Project>
+    <PropertyGroup>
+        <ModName>$(RootNamespace)</ModName>
+        <ModAuthor>Millzy</ModAuthor>
+        <ModVersion>0.1.0</ModVersion>
+        <ModDescription>An XML-based UI utility for BONELAB.</ModDescription>
+        <ModId>dev.millzy.$(ModName)</ModId>
+        <ModWebsiteUrl>https://github.com/MillzyDev/Bonex</ModWebsiteUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ModDependencies Include="LavaGang-MelonLoader-0.5.7" />
+        <ModDependencies Include="gnonme-BoneLib-2.4.0" />
+    </ItemGroup>
+</Project> 
