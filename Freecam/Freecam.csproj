@@ -54,6 +54,9 @@
         <Reference Include="MelonLoader">
             <HintPath>$(GameDir)\MelonLoader\MelonLoader.dll</HintPath>
         </Reference>
+        <Reference Include="SLZ.Marrow">
+          <HintPath>$(GameDir)\MelonLoader\Managed\SLZ.Marrow.dll</HintPath>
+        </Reference>
         <Reference Include="UnhollowerBaseLib">
             <HintPath>$(GameDir)\MelonLoader\Managed\UnhollowerBaseLib.dll</HintPath>
         </Reference>
@@ -86,7 +89,10 @@
 
     <ItemGroup>
         <Compile Include="Configuration\Config.cs" />
+        <Compile Include="HarmonyPatches\OpenControllerRig_Patch.cs" />
+        <Compile Include="HarmonyPatches\XRHMD_Patch.cs" />
         <Compile Include="Mod.cs" />
+        <Compile Include="PatchManager.cs" />
         <Compile Include="Properties/AssemblyInfo.cs" />
     </ItemGroup>
 
