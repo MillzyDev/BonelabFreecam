@@ -3,10 +3,17 @@ using MelonLoader;
 
 namespace Freecam
 {
-    public class Mod : MelonMod
+    public sealed class Mod : MelonMod
     {
+        public override void OnInitializeMelon()
+        {
+            if (Config.Instance.FreecamEnabled)
+                PatchManager.Instance.PatchAll();
+        }
+
         public override void OnApplicationQuit()
         {
+            PatchManager.Instance.UnpatchAll();
             Config.Instance.Save();
         }
     }
