@@ -3,9 +3,9 @@
         <ModName>$(RootNamespace)</ModName>
         <ModAuthor>Millzy</ModAuthor>
         <ModVersion>0.1.0</ModVersion>
-        <ModDescription>An XML-based UI utility for BONELAB.</ModDescription>
+        <ModDescription>A desktop freecam for BONELAB.</ModDescription>
         <ModId>dev.millzy.$(ModName)</ModId>
-        <ModWebsiteUrl>https://github.com/MillzyDev/Bonex</ModWebsiteUrl>
+        <ModWebsiteUrl>https://github.com/MillzyDev/BonelabFreecam</ModWebsiteUrl>
     </PropertyGroup>
 
     <ItemGroup>
