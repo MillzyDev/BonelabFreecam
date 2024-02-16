@@ -1,12 +1,13 @@
 ﻿using System;
 using Freecam.Configuration;
 using MelonLoader;
+using SLZ.Rig;
 using UnityEngine;
 
 namespace Freecam;
 
 [RegisterTypeInIl2Cpp]
-internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
+internal sealed class FreecamHostManager(IntPtr ptr, RigManager _rigManager) : MonoBehaviour(ptr)
 {
     private Config _config = null!;
     private GameObject _freecamObject = null!;
@@ -18,7 +19,6 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
 
         Transform hostTransform = freecamHost.transform;
         hostTransform.position = playerHead.position;
-        hostTransform.rotation = playerHead.rotation;
 
         var freecamObject = new GameObject("Freecam");
         freecamObject.transform.SetParent(hostTransform, false);
