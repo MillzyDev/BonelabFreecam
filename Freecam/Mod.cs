@@ -8,12 +8,12 @@ namespace Freecam
         public override void OnInitializeMelon()
         {
             if (Config.Instance.FreecamEnabled)
-                PatchManager.Instance.PatchAll();
+                PatchManager.Instance.InstallFreecamPatches();
         }
 
         public override void OnApplicationQuit()
         {
-            PatchManager.Instance.UnpatchAll();
+            PatchManager.Instance.UninstallFreecamPatches();
             Config.Instance.Save();
         }
     }
