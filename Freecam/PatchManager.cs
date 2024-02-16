@@ -17,12 +17,12 @@ internal sealed class PatchManager
         get => s_lazy.Value;
     }
 
-    public void PatchAll()
+    public void InstallFreecamPatches()
     {
         _harmony.PatchAll();
     }
 
-    public void UnpatchAll()
+    public void UninstallFreecamPatches()
     {
         _harmony.UnpatchSelf();
     }
