@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using Freecam.Configuration;
+using HarmonyLib;
 using SLZ.Bonelab;
 using SLZ.Rig;
 using SLZ.SaveData;
@@ -9,11 +10,18 @@ namespace Freecam.HarmonyPatches;
 [HarmonyPatch(nameof(RigManager.Start))]
 internal static class RigManager_Start
 {
+    private static readonly Config s_config = Config.Instance;
+    
     [HarmonyPostfix]
     // ReSharper disable once InconsistentNaming
     // ReSharper disable once UnusedMember.Local
     private static void Postfix(RigManager __instance)
     {
+        if (!s_config.FreecamEnabled)
+        {
+            return;
+        }
+        
         // Switch spectator camera to passthrough so the spectator camera can work.
         Control_Player controlPlayer = __instance.uiRig.controlPlayer;
         DataManager.Settings._spectatorSettings._spectatorCameraMode = SpectatorCameraMode.Passthrough;
