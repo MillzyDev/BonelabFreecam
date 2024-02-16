@@ -1,8 +1,10 @@
 ﻿using System;
+using MelonLoader;
 using UnityEngine;
 
 namespace Freecam;
 
+[RegisterTypeInIl2Cpp]
 internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
 {
     public static void CreateFreecam(Transform playerHead)
