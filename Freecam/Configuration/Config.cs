@@ -9,11 +9,13 @@ internal sealed class Config
 
     private readonly MelonPreferences_Category _config;
     private readonly MelonPreferences_Entry<bool> _freecamEnabled;
+    private readonly MelonPreferences_Entry<bool> _noHmd;
     
     private Config()
     {
         _config = MelonPreferences.CreateCategory("Freecam");
         _freecamEnabled = _config.CreateEntry("bFreecamEnabled", false);
+        _noHmd = _config.CreateEntry("bNoHmd", true);
     }
 
     public static Config Instance
@@ -25,6 +27,12 @@ internal sealed class Config
     {
         get => _freecamEnabled.Value;
         set => _freecamEnabled.Value = value;
+    }
+
+    public bool NoHmd
+    {
+        get => _noHmd.Value;
+        set => _noHmd.Value = value;
     }
 
     public void Save()
