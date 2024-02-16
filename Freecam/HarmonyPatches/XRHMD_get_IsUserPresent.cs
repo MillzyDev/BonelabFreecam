@@ -1,5 +1,5 @@
-﻿using HarmonyLib;
-using MelonLoader;
+﻿using Freecam.Configuration;
+using HarmonyLib;
 using SLZ.Marrow.Input;
 
 namespace Freecam.HarmonyPatches;
@@ -15,6 +15,9 @@ internal static class XRHMD_get_IsUserPresent
     [HarmonyPrefix]
     private static bool Prefix(ref bool __result)
     {
+        if (!Config.Instance.FreecamEnabled)
+            return false;
+        
         // To stop the game from pausing because no headset is on, we simply tell it "nuh uh the headset is still awake"
         __result = true;
         return false;

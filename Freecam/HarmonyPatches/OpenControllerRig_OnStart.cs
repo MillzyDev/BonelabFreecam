@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using Freecam.Configuration;
+using HarmonyLib;
 using SLZ.Rig;
 
 namespace Freecam.HarmonyPatches;
@@ -12,6 +13,9 @@ internal static class OpenControllerRig_OnStart
     // ReSharper disable once UnusedMember.Local
     private static void Postfix(OpenControllerRig __instance)
     {
+        if (!Config.Instance.FreecamEnabled)
+            return;
+        
         // The game won't unpause unless its already paused (slz tryna make my life difficult smh)
         __instance._isControllerRigPaused = true;
     }
