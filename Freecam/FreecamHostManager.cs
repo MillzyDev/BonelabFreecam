@@ -7,18 +7,20 @@ using UnityEngine;
 namespace Freecam;
 
 [RegisterTypeInIl2Cpp]
-internal sealed class FreecamHostManager(IntPtr ptr, RigManager _rigManager) : MonoBehaviour(ptr)
+internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
 {
     private Config _config = null!;
     private GameObject _freecamObject = null!;
+    private RigManager _rigManager = null!;
     
-    public static void CreateFreecam(Transform playerHead)
+    public static void CreateFreecam(RigManager rigManager)
     {
         var freecamHost = new GameObject("FreecamHost");
-        _ = freecamHost.AddComponent<FreecamHostManager>();
+        var instance = freecamHost.AddComponent<FreecamHostManager>();
+        instance._rigManager = rigManager;
 
         Transform hostTransform = freecamHost.transform;
-        hostTransform.position = playerHead.position;
+        hostTransform.position = rigManager.ControllerRig.m_head.position;
 
         var freecamObject = new GameObject("Freecam");
         freecamObject.transform.SetParent(hostTransform, false);
