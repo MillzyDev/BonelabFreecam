@@ -84,6 +84,9 @@
         <Reference Include="UnityEngine.CoreModule">
             <HintPath>$(GameDir)\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
+        <Reference Include="UnityEngine.IMGUIModule">
+          <HintPath>$(GameDir)\MelonLoader\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+        </Reference>
         <Reference Include="UnityEngine.InputLegacyModule">
           <HintPath>$(GameDir)\MelonLoader\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
         </Reference>
@@ -116,6 +119,7 @@
         <Compile Include="HarmonyPatches\RigManager_Start.cs" />
         <Compile Include="HarmonyPatches\XRApi_InitializeXRLoader.cs" />
         <Compile Include="HarmonyPatches\XRHMD_get_IsUserPresent.cs" />
+        <Compile Include="IMGUI\ConfigMenu.cs" />
         <Compile Include="Mod.cs" />
         <Compile Include="PatchManager.cs" />
         <Compile Include="Properties/AssemblyInfo.cs" />
@@ -123,10 +127,6 @@
 
     <ItemGroup>
         <None Include="Freecam.csproj.user" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="IMGUI\" />
     </ItemGroup>
 
     <Import Project="$(SolutionDir)\Mod.props" />
