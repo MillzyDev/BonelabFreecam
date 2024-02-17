@@ -17,9 +17,6 @@ internal static class XRHMD_get_IsUserPresent
     [HarmonyPrefix]
     private static bool Prefix(ref bool __result)
     {
-        if (!s_config.FreecamEnabled)
-            return false;
-        
         // To stop the game from pausing because no headset is on, we simply tell it "nuh uh the headset is still awake"
         __result = true;
         return false;
