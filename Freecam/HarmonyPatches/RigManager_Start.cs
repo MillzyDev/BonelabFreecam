@@ -17,16 +17,14 @@ internal static class RigManager_Start
     // ReSharper disable once UnusedMember.Local
     private static void Postfix(RigManager __instance)
     {
-        if (!s_config.FreecamEnabled)
+        if (s_config.FreecamEnabled)
         {
-            return;
+            // Switch spectator camera to passthrough, if its enabled initially
+            Control_Player controlPlayer = __instance.uiRig.controlPlayer;
+            DataManager.Settings._spectatorSettings._spectatorCameraMode = SpectatorCameraMode.Passthrough;
+            controlPlayer.UpdateSpectator();
         }
         
-        // Switch spectator camera to passthrough so the spectator camera can work.
-        Control_Player controlPlayer = __instance.uiRig.controlPlayer;
-        DataManager.Settings._spectatorSettings._spectatorCameraMode = SpectatorCameraMode.Passthrough;
-        controlPlayer.UpdateSpectator();
-        
-        FreecamHostManager.CreateFreecam(__instance.ControllerRig.m_head);
+        FreecamHostManager.CreateFreecam(__instance);
     }
 }
