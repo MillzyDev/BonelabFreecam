@@ -1,7 +1,9 @@
 ﻿using System;
 using Freecam.Configuration;
 using MelonLoader;
+using SLZ.Bonelab;
 using SLZ.Rig;
+using SLZ.SaveData;
 using UnityEngine;
 
 namespace Freecam;
@@ -55,5 +57,9 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
         bool newFreecamActivity = !_config.FreecamEnabled;
         _freecamObject.SetActive(newFreecamActivity);
         _config.FreecamEnabled = newFreecamActivity;
+        
+        Control_Player controlPlayer = _rigManager.uiRig.controlPlayer;
+        DataManager.Settings._spectatorSettings._spectatorCameraMode = SpectatorCameraMode.Passthrough;
+        controlPlayer.UpdateSpectator();
     }
 }
