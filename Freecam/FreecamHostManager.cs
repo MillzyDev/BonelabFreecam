@@ -1,5 +1,6 @@
 ﻿using System;
 using Freecam.Configuration;
+using Freecam.IMGUI;
 using MelonLoader;
 using SLZ.Bonelab;
 using SLZ.Rig;
@@ -14,6 +15,7 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
     private Config _config = null!;
     private GameObject _freecamObject = null!;
     private RigManager _rigManager = null!;
+    private ConfigMenu _menu = null!;
     
     public static void CreateFreecam(RigManager rigManager)
     {
@@ -32,6 +34,11 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
         camera.cameraType = CameraType.Game;
 
         _ = freecamObject.AddComponent<FreecamController>();
+
+        var config = Config.Instance;
+        
+        var configMenu = freecamHost.AddComponent<ConfigMenu>();
+        configMenu.enabled = config.ShowConfigMenu;
     }
 
     private void Awake()
@@ -42,6 +49,7 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
     private void Start()
     {
         _freecamObject = GetComponentInChildren<FreecamController>().gameObject;
+        _menu = GetComponent<ConfigMenu>();
     }
 
     private void Update()
@@ -50,9 +58,14 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
         {
             ToggleFreecam();
         }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            ToggleMenu();
+        }
     }
 
-    private void ToggleFreecam()
+    public void ToggleFreecam()
     {
         bool newFreecamActivity = !_config.FreecamEnabled;
         _freecamObject.SetActive(newFreecamActivity);
@@ -61,5 +74,12 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
         Control_Player controlPlayer = _rigManager.uiRig.controlPlayer;
         DataManager.Settings._spectatorSettings._spectatorCameraMode = SpectatorCameraMode.Passthrough;
         controlPlayer.UpdateSpectator();
+    }
+
+    private void ToggleMenu()
+    {
+        bool menuEnabled = !_config.ShowConfigMenu;
+        _menu.enabled = menuEnabled;
+        _config.ShowConfigMenu = menuEnabled;
     }
 }
