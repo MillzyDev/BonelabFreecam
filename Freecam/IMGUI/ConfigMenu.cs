@@ -13,6 +13,7 @@ public class ConfigMenu(IntPtr ptr) : MonoBehaviour(ptr)
 
     private bool _noHmdToggle;
     private float _speedSlider;
+    private string _speedString = string.Empty;
     
     private void Awake()
     {
@@ -47,7 +48,9 @@ public class ConfigMenu(IntPtr ptr) : MonoBehaviour(ptr)
 
         _noHmdToggle = GUI.Toggle(new Rect(15f, 85f, 190f, 20f), _noHmdToggle, "No HMD Mode");
 
-        GUI.Label(new Rect(15f, 110f, 190f, 20f), $"Speed: {_speedSlider:F}");
+        GUI.Label(new Rect(15f, 110f, 190f, 20f), "Speed:");
+
+        _speedString = GUI.TextField(new Rect(150f, 110f, 60f, 20f), _speedString);
         
         _speedSlider = GUI.HorizontalSlider(new Rect(15f, 130f, 190f, 20f), _speedSlider, 0.1f, 40f);
     }
@@ -63,10 +66,20 @@ public class ConfigMenu(IntPtr ptr) : MonoBehaviour(ptr)
         {
             _config.NoHmd = _noHmdToggle;
         }
-
+        
         if (Math.Abs(_speedSlider - _config.Speed) > 0.01f)
         {
             _config.Speed = _speedSlider;
+            _speedString = $"{_speedSlider:F}";
+        }
+
+        if (float.TryParse(_speedString, out float speed))
+        {
+            _speedSlider = speed;
+        }
+        else
+        {
+            _speedString = $"{_speedSlider:F}";
         }
     }
 }

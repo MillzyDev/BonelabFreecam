@@ -1,4 +1,5 @@
 ﻿using System;
+using Freecam.Configuration;
 using MelonLoader;
 using UnityEngine;
 
@@ -8,10 +9,16 @@ namespace Freecam;
 internal sealed class FreecamController(IntPtr ptr) : MonoBehaviour(ptr)
 {
     private Vector3 _lastMousePosition = Vector3.zero;
+    private Config _config = null!;
+
+    private void Awake()
+    { 
+        _config = Config.Instance;
+    }
 
     private void Update()
     {
-        float speed = 10f * Time.deltaTime;
+        float speed = _config.Speed * Time.deltaTime;
 
         // fast mode
         if (Input.GetKey(KeyCode.LeftShift))
