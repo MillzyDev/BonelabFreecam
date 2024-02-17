@@ -12,6 +12,7 @@ internal sealed class Config
     private readonly MelonPreferences_Entry<bool> _noHmd;
     private readonly MelonPreferences_Entry<bool> _showConfigMenu;
     private readonly MelonPreferences_Entry<float> _speed;
+    private readonly MelonPreferences_Entry<float> _fastMultiplier;
     
     private Config()
     {
@@ -21,6 +22,7 @@ internal sealed class Config
         _noHmd = _config.CreateEntry("bNoHmd", true);
         _showConfigMenu = _config.CreateEntry("bShowConfigMenu", true);
         _speed = _config.CreateEntry("fNormalSpeed", 10f);
+        _fastMultiplier = _config.CreateEntry("fFastMultiplier", 10f);
     }
 
     public static Config Instance
@@ -50,6 +52,12 @@ internal sealed class Config
     {
         get => _speed.Value;
         set => _speed.Value = value;
+    }
+
+    public float FastMultiplier
+    {
+        get => _fastMultiplier.Value;
+        set => _fastMultiplier.Value = value;
     }
 
     public void Save()

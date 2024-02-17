@@ -19,11 +19,12 @@ internal sealed class FreecamController(IntPtr ptr) : MonoBehaviour(ptr)
     private void Update()
     {
         float speed = _config.Speed * Time.deltaTime;
+        float fastMultiplier = _config.FastMultiplier;
 
         // fast mode
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            speed *= 10f;
+            speed *= fastMultiplier;
         }
 
         Transform cameraTransform = transform;

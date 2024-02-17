@@ -12,8 +12,10 @@ public class ConfigMenu(IntPtr ptr) : MonoBehaviour(ptr)
     private FreecamHostManager _freecamHostManager = null!;
 
     private bool _noHmdToggle;
-    private float _speedSlider;
     private string _speedString = string.Empty;
+    private float _speedSlider;
+    private string _fastMultiplierString = string.Empty;
+    private float _fastMultiplier;
     
     private void Awake()
     {
@@ -49,10 +51,12 @@ public class ConfigMenu(IntPtr ptr) : MonoBehaviour(ptr)
         _noHmdToggle = GUI.Toggle(new Rect(15f, 85f, 190f, 20f), _noHmdToggle, "No HMD Mode");
 
         GUI.Label(new Rect(15f, 110f, 190f, 20f), "Speed:");
-
         _speedString = GUI.TextField(new Rect(150f, 110f, 60f, 20f), _speedString);
-        
         _speedSlider = GUI.HorizontalSlider(new Rect(15f, 130f, 190f, 20f), _speedSlider, 0.1f, 40f);
+        
+        GUI.Label(new Rect(15f, 155f, 190f, 20f), "Fast Multiplier:");
+        _fastMultiplierString = GUI.TextField(new Rect(150f, 155f, 60f, 20f), _fastMultiplierString);
+        _fastMultiplier = GUI.HorizontalSlider(new Rect(15f, 180f, 190f, 20f), _fastMultiplier, 1.5f, 20f);
     }
 
     private void OnCameraGUI()
@@ -80,6 +84,21 @@ public class ConfigMenu(IntPtr ptr) : MonoBehaviour(ptr)
         else
         {
             _speedString = $"{_speedSlider:F}";
+        }
+
+        if (Math.Abs(_fastMultiplier - _config.FastMultiplier) > 0.01f)
+        {
+            _config.FastMultiplier = _fastMultiplier;
+            _fastMultiplierString = $"{_fastMultiplier:F}";
+        }
+
+        if (float.TryParse(_fastMultiplierString, out float fastMultiplier))
+        {
+            _fastMultiplier = fastMultiplier;
+        }
+        else
+        {
+            _fastMultiplierString = $"{_fastMultiplier:F}";
         }
     }
 }
