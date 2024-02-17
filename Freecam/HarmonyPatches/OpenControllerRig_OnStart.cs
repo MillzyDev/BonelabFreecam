@@ -14,6 +14,9 @@ internal static class OpenControllerRig_OnStart
     private static void Postfix(OpenControllerRig __instance)
     {
         // The game won't unpause unless its already paused (slz tryna make my life difficult smh)
+        if (!Config.Instance.FreecamEnabled)
+            return;
+        
         __instance._isControllerRigPaused = true;
     }
 }
