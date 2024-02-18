@@ -76,8 +76,6 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
         _freecamObject.SetActive(newFreecamActivity);
         _config.FreecamEnabled = newFreecamActivity;
         
-        DataManager.Settings._graphicsSettings._foveatedPreset = newFreecamActivity ? FoveatedPresets.Medium : FoveatedPresets.Disabled;
-        
         Control_Player controlPlayer = _rigManager.uiRig.controlPlayer;
         DataManager.Settings._spectatorSettings._spectatorCameraMode = SpectatorCameraMode.Passthrough;
         controlPlayer.UpdateSpectator();
