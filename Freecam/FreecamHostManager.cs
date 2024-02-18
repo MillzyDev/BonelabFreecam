@@ -58,6 +58,7 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
     private void Update()
     {
         UpdateFieldOfView();
+        UpdateNearClip();
         
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -91,5 +92,10 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
     private void UpdateFieldOfView()
     {
         _camera.fieldOfView = _config.FieldOfView;
+    }
+
+    private void UpdateNearClip()
+    {
+        _camera.nearClipPlane = _config.NearClip;
     }
 }
