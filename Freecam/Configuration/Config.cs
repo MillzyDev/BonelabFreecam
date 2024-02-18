@@ -13,6 +13,7 @@ internal sealed class Config
     private readonly MelonPreferences_Entry<bool> _showConfigMenu;
     private readonly MelonPreferences_Entry<float> _speed;
     private readonly MelonPreferences_Entry<float> _fastMultiplier;
+    private readonly MelonPreferences_Entry<int> _fieldOfView;
     
     private Config()
     {
@@ -23,6 +24,7 @@ internal sealed class Config
         _showConfigMenu = _config.CreateEntry("bShowConfigMenu", true);
         _speed = _config.CreateEntry("fNormalSpeed", 10f);
         _fastMultiplier = _config.CreateEntry("fFastMultiplier", 10f);
+        _fieldOfView = _config.CreateEntry("nFieldOfView", 90);
     }
 
     public static Config Instance
@@ -58,6 +60,12 @@ internal sealed class Config
     {
         get => _fastMultiplier.Value;
         set => _fastMultiplier.Value = value;
+    }
+
+    public int FieldOfView
+    {
+        get => _fieldOfView.Value;
+        set => _fieldOfView.Value = value;
     }
 
     public void Save()

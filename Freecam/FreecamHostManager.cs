@@ -6,6 +6,7 @@ using SLZ.Bonelab;
 using SLZ.Rig;
 using SLZ.SaveData;
 using UnityEngine;
+using UnityEngine.XR.OpenXR;
 
 namespace Freecam;
 
@@ -16,6 +17,7 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
     private GameObject _freecamObject = null!;
     private RigManager _rigManager = null!;
     private ConfigMenu _menu = null!;
+    private Camera _camera = null!;
     
     public static void CreateFreecam(RigManager rigManager)
     {
@@ -31,7 +33,7 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
         freecamObject.transform.localPosition = new Vector3(0f, 0f, 0f);
 
         var camera = freecamObject.AddComponent<Camera>();
-        camera.cameraType = CameraType.Game;
+        camera.cameraType = CameraType.SceneView; // this allows us to change the FOV and avoid foveated rendering
 
         _ = freecamObject.AddComponent<FreecamController>();
 
@@ -50,10 +52,13 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
     {
         _freecamObject = GetComponentInChildren<FreecamController>().gameObject;
         _menu = GetComponent<ConfigMenu>();
+        _camera = GetComponentInChildren<Camera>();
     }
 
     private void Update()
     {
+        UpdateFieldOfView();
+        
         if (Input.GetKeyDown(KeyCode.F))
         {
             ToggleFreecam();
@@ -71,6 +76,8 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
         _freecamObject.SetActive(newFreecamActivity);
         _config.FreecamEnabled = newFreecamActivity;
         
+        DataManager.Settings._graphicsSettings._foveatedPreset = newFreecamActivity ? FoveatedPresets.Medium : FoveatedPresets.Disabled;
+        
         Control_Player controlPlayer = _rigManager.uiRig.controlPlayer;
         DataManager.Settings._spectatorSettings._spectatorCameraMode = SpectatorCameraMode.Passthrough;
         controlPlayer.UpdateSpectator();
@@ -81,5 +88,10 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
         bool menuEnabled = !_config.ShowConfigMenu;
         _menu.enabled = menuEnabled;
         _config.ShowConfigMenu = menuEnabled;
+    }
+
+    private void UpdateFieldOfView()
+    {
+        _camera.fieldOfView = _config.FieldOfView;
     }
 }

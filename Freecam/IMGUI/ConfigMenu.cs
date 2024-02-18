@@ -15,7 +15,9 @@ public class ConfigMenu(IntPtr ptr) : MonoBehaviour(ptr)
     private string _speedString = string.Empty;
     private float _speedSlider;
     private string _fastMultiplierString = string.Empty;
-    private float _fastMultiplier;
+    private float _fastMultiplierSlider;
+    private string _fieldOfViewString = string.Empty;
+    private float _fieldOfViewSlider;
     
     private void Awake()
     {
@@ -23,6 +25,8 @@ public class ConfigMenu(IntPtr ptr) : MonoBehaviour(ptr)
 
         _noHmdToggle = _config.NoHmd;
         _speedSlider = _config.Speed;
+        _fastMultiplierSlider = _config.FastMultiplier;
+        _fieldOfViewSlider = _config.FieldOfView;
     }
 
     private void Start()
@@ -56,12 +60,16 @@ public class ConfigMenu(IntPtr ptr) : MonoBehaviour(ptr)
         
         GUI.Label(new Rect(15f, 155f, 190f, 20f), "Fast Multiplier:");
         _fastMultiplierString = GUI.TextField(new Rect(150f, 155f, 60f, 20f), _fastMultiplierString);
-        _fastMultiplier = GUI.HorizontalSlider(new Rect(15f, 180f, 190f, 20f), _fastMultiplier, 1.5f, 20f);
+        _fastMultiplierSlider = GUI.HorizontalSlider(new Rect(15f, 180f, 190f, 20f), _fastMultiplierSlider, 1.5f, 20f);
     }
 
     private void OnCameraGUI()
     {
         GUI.Box(new Rect(215f, 40f, 200f, 300f), "Camera");
+        
+        GUI.Label(new Rect(220f, 60f, 190f, 20f), "Field of View:");
+        _fieldOfViewString = GUI.TextField(new Rect(335f, 60f, 50f, 20f), _fieldOfViewString);
+        _fieldOfViewSlider = GUI.HorizontalSlider(new Rect(220f, 85f, 190f, 20f), _fieldOfViewSlider, 60f, 120f);
     }
 
     private void LateUpdate()
@@ -86,19 +94,34 @@ public class ConfigMenu(IntPtr ptr) : MonoBehaviour(ptr)
             _speedString = $"{_speedSlider:F}";
         }
 
-        if (Math.Abs(_fastMultiplier - _config.FastMultiplier) > 0.01f)
+        if (Math.Abs(_fastMultiplierSlider - _config.FastMultiplier) > 0.01f)
         {
-            _config.FastMultiplier = _fastMultiplier;
-            _fastMultiplierString = $"{_fastMultiplier:F}";
+            _config.FastMultiplier = _fastMultiplierSlider;
+            _fastMultiplierString = $"{_fastMultiplierSlider:F}";
         }
 
         if (float.TryParse(_fastMultiplierString, out float fastMultiplier))
         {
-            _fastMultiplier = fastMultiplier;
+            _fastMultiplierSlider = fastMultiplier;
         }
         else
         {
-            _fastMultiplierString = $"{_fastMultiplier:F}";
+            _fastMultiplierString = $"{_fastMultiplierSlider:F}";
+        }
+
+        if (Math.Abs(_fieldOfViewSlider - _config.FieldOfView) > 0.01f)
+        {
+            _config.FieldOfView = (int)_fieldOfViewSlider;
+            _fieldOfViewString = $"{_fieldOfViewSlider:0F}";
+        }
+
+        if (int.TryParse(_fieldOfViewString, out int fieldOfView))
+        {
+            _fieldOfViewSlider = fieldOfView;
+        }
+        else
+        {
+            _fieldOfViewString = $"{_fieldOfViewSlider:00}";
         }
     }
 }
