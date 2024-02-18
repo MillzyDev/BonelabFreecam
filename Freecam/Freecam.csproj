@@ -66,9 +66,6 @@
         <Reference Include="UniTask">
           <HintPath>$(GameDir)\MelonLoader\Managed\UniTask.dll</HintPath>
         </Reference>
-        <Reference Include="Unity.TextMeshPro">
-            <HintPath>$(GameDir)\MelonLoader\Managed\Unity.TextMeshPro.dll</HintPath>
-        </Reference>
         <Reference Include="Unity.XR.Management">
           <HintPath>$(GameDir)\MelonLoader\Managed\Unity.XR.Management.dll</HintPath>
         </Reference>
@@ -78,9 +75,6 @@
         <Reference Include="UnityEngine">
             <HintPath>$(GameDir)\MelonLoader\Managed\UnityEngine.dll</HintPath>
         </Reference>
-        <Reference Include="UnityEngine.AudioModule">
-          <HintPath>$(GameDir)\MelonLoader\Managed\UnityEngine.AudioModule.dll</HintPath>
-        </Reference>
         <Reference Include="UnityEngine.CoreModule">
             <HintPath>$(GameDir)\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
@@ -89,15 +83,6 @@
         </Reference>
         <Reference Include="UnityEngine.InputLegacyModule">
           <HintPath>$(GameDir)\MelonLoader\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.InputModule">
-          <HintPath>$(GameDir)\MelonLoader\Managed\UnityEngine.InputModule.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.UI">
-            <HintPath>$(GameDir)\MelonLoader\Managed\UnityEngine.UI.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.UIModule">
-            <HintPath>$(GameDir)\MelonLoader\Managed\UnityEngine.UIModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.XRModule">
           <HintPath>$(GameDir)\MelonLoader\Managed\UnityEngine.XRModule.dll</HintPath>
