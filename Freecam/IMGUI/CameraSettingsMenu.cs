@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Freecam.IMGUI;
 
 [RegisterTypeInIl2Cpp]
-public class CameraSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr)
+internal sealed class CameraSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr)
 {
     private Config _config = null!;
     
