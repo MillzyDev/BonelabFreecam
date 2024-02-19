@@ -104,7 +104,9 @@
         <Compile Include="HarmonyPatches\RigManager_Start.cs" />
         <Compile Include="HarmonyPatches\XRApi_InitializeXRLoader.cs" />
         <Compile Include="HarmonyPatches\XRHMD_get_IsUserPresent.cs" />
-        <Compile Include="IMGUI\ConfigMenu.cs" />
+        <Compile Include="IMGUI\CameraSettingsMenu.cs" />
+        <Compile Include="IMGUI\FreecamMenu.cs" />
+        <Compile Include="IMGUI\GeneralSettingsMenu.cs" />
         <Compile Include="Mod.cs" />
         <Compile Include="PatchManager.cs" />
         <Compile Include="Properties/AssemblyInfo.cs" />
