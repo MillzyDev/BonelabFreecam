@@ -16,7 +16,7 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
     private Config _config = null!;
     private GameObject _freecamObject = null!;
     private RigManager _rigManager = null!;
-    private ConfigMenu _menu = null!;
+    private FreecamMenu _menu = null!;
     private Camera _camera = null!;
     
     public static void CreateFreecam(RigManager rigManager)
@@ -39,7 +39,7 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
 
         var config = Config.Instance;
         
-        var configMenu = freecamHost.AddComponent<ConfigMenu>();
+        var configMenu = freecamHost.AddComponent<FreecamMenu>();
         configMenu.enabled = config.ShowConfigMenu;
     }
 
@@ -51,7 +51,7 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
     private void Start()
     {
         _freecamObject = GetComponentInChildren<FreecamController>().gameObject;
-        _menu = GetComponent<ConfigMenu>();
+        _menu = GetComponent<FreecamMenu>();
         _camera = GetComponentInChildren<Camera>();
     }
 
