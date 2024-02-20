@@ -6,7 +6,6 @@ using SLZ.Bonelab;
 using SLZ.Rig;
 using SLZ.SaveData;
 using UnityEngine;
-using UnityEngine.XR.OpenXR;
 
 namespace Freecam;
 
@@ -17,7 +16,6 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
     private GameObject _freecamObject = null!;
     private RigManager _rigManager = null!;
     private FreecamMenu _menu = null!;
-    private Camera _camera = null!;
     
     public static void CreateFreecam(RigManager rigManager)
     {
@@ -52,14 +50,10 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
     {
         _freecamObject = GetComponentInChildren<FreecamController>().gameObject;
         _menu = GetComponent<FreecamMenu>();
-        _camera = GetComponentInChildren<Camera>();
     }
 
     private void Update()
     {
-        UpdateFieldOfView();
-        UpdateNearClip();
-        
         if (Input.GetKeyDown(KeyCode.F))
         {
             ToggleFreecam();
@@ -87,15 +81,5 @@ internal sealed class FreecamHostManager(IntPtr ptr) : MonoBehaviour(ptr)
         bool menuEnabled = !_config.ShowConfigMenu;
         _menu.enabled = menuEnabled;
         _config.ShowConfigMenu = menuEnabled;
-    }
-
-    private void UpdateFieldOfView()
-    {
-        _camera.fieldOfView = _config.FieldOfView;
-    }
-
-    private void UpdateNearClip()
-    {
-        _camera.nearClipPlane = _config.NearClip;
     }
 }
