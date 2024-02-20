@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Freecam.Configuration;
 using MelonLoader;
 using UnityEngine;
@@ -6,21 +9,57 @@ using UnityEngine;
 namespace Freecam.IMGUI;
 
 [RegisterTypeInIl2Cpp]
-internal sealed class CameraSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr)
+internal sealed class CameraSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INotifyPropertyChanged
 {
-    private Config _config = null!;
-    
     private string _fieldOfViewString = string.Empty;
     private float _fieldOfViewValue;
     private string _nearClipString = string.Empty;
     private float _nearClipValue;
 
+    public float FieldOfView
+    {
+        get => _fieldOfViewValue;
+        set
+        {
+            SetField(ref _fieldOfViewValue, value);
+            _fieldOfViewString = value.ToString("F");
+        }
+    }
+
+    public float NearClip
+    {
+        get => _nearClipValue;
+        set { 
+            SetField(ref _nearClipValue, value);
+            _nearClipString = value.ToString("F");
+        }
+    }
+
+    private string FieldOfViewString
+    {
+        set
+        {
+            if (!SetField(ref _fieldOfViewString, value, true)) return;
+
+            if (float.TryParse(value, out float fieldOfView)) FieldOfView = fieldOfView;
+        }
+    }
+
+    private string NearClipString
+    {
+        set
+        {
+            if (!SetField(ref _nearClipString, value, true)) return;
+
+            if (float.TryParse(value, out float nearClip)) NearClip = nearClip;
+        }
+    }
+
     private void Awake()
     {
-        _config = Config.Instance;
-        
-        _fieldOfViewValue = _config.FieldOfView;
-        _nearClipValue = _config.NearClip;
+        var config = Config.Instance;
+        _fieldOfViewValue = config.FieldOfView;
+        _nearClipValue = config.NearClip;
     }
 
     private void OnGUI()
@@ -28,48 +67,29 @@ internal sealed class CameraSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr)
         GUI.Box(new Rect(215f, 40f, 200f, 300f), "Camera");
         
         GUI.Label(new Rect(220f, 60f, 190f, 20f), "Field of View:");
-        _fieldOfViewString = GUI.TextField(new Rect(350f, 60f, 50f, 20f), _fieldOfViewString);
-        _fieldOfViewValue = GUI.HorizontalSlider(new Rect(220f, 85f, 190f, 20f), _fieldOfViewValue, 60f, 120f);
+        FieldOfViewString = GUI.TextField(new Rect(350f, 60f, 50f, 20f), _fieldOfViewString);
+        FieldOfView = GUI.HorizontalSlider(new Rect(220f, 85f, 190f, 20f), _fieldOfViewValue, 60f, 120f);
         
         GUI.Label(new Rect(220f, 125f, 190f, 20f), "Near Clip Distance:");
-        _nearClipString = GUI.TextField(new Rect(350f, 125f, 50f, 20f), _nearClipString);
-        _nearClipValue = GUI.HorizontalSlider(new Rect(220f, 150f, 190f, 20f), _nearClipValue, 0.01f, 0.5f);
+        NearClipString = GUI.TextField(new Rect(350f, 125f, 50f, 20f), _nearClipString);
+        NearClip = GUI.HorizontalSlider(new Rect(220f, 150f, 190f, 20f), _nearClipValue, 0.01f, 0.5f);
     }
 
-    private void Update()
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
-        #region Field of View
-        if (Math.Abs(_fieldOfViewValue - _config.FieldOfView) > 0.01f)
-        {
-            _config.FieldOfView = (int)_fieldOfViewValue;
-            _fieldOfViewString = $"{_fieldOfViewValue:0F}";
-        }
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 
-        if (int.TryParse(_fieldOfViewString, out int fieldOfView))
-        {
-            _fieldOfViewValue = fieldOfView;
-        }
-        else
-        {
-            _fieldOfViewString = $"{_fieldOfViewValue:00}";
-        }
-        #endregion
-
-        #region Near Clip
-        if (Math.Abs(_fieldOfViewValue - _config.NearClip) > 0.001)
-        {
-            _config.NearClip = _nearClipValue;
-            _nearClipString = $"{_nearClipValue:F}";
-        }
-
-        if (float.TryParse(_nearClipString, out float nearClip))
-        {
-            _nearClipValue = nearClip;
-        }
-        else
-        {
-            _nearClipString = $"{_nearClipValue:F}";
-        }
-        #endregion
+    private bool SetField<T>(ref T field, T value, bool dontFire = false, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        
+        if (!dontFire)
+            OnPropertyChanged(propertyName);
+        
+        return true;
     }
 }

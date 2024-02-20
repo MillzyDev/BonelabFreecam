@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using Freecam.Configuration;
 using MelonLoader;
 using UnityEngine;
 
@@ -7,13 +9,29 @@ namespace Freecam.IMGUI;
 [RegisterTypeInIl2Cpp]
 public class FreecamMenu(IntPtr ptr) : MonoBehaviour(ptr)
 {
+    private Config _config = null!;
+    private Camera _camera = null!;
+    
+    private FreecamController _freecamController = null!;
     private GeneralSettingsMenu _generalSettingsMenu = null!;
     private CameraSettingsMenu _cameraSettingsMenu = null!;
     
     private void Awake()
     {
+        _config = Config.Instance;
+        
+        _freecamController = GetComponentInChildren<FreecamController>();
+        
         _generalSettingsMenu = gameObject.AddComponent<GeneralSettingsMenu>();
         _cameraSettingsMenu = gameObject.AddComponent<CameraSettingsMenu>();
+
+        _generalSettingsMenu.PropertyChanged += PropertyChanged;
+        _cameraSettingsMenu.PropertyChanged += PropertyChanged;
+    }
+
+    private void Start()
+    {
+        _camera = GetComponentInChildren<Camera>();
     }
 
     private void OnGUI()
@@ -29,7 +47,33 @@ public class FreecamMenu(IntPtr ptr) : MonoBehaviour(ptr)
 
     private void OnDisable()
     {
+        SaveValues();
+        
         _generalSettingsMenu.enabled = false;
         _cameraSettingsMenu.enabled = false;
+    }
+
+    private void PropertyChanged(object sender, PropertyChangedEventArgs args)
+    {
+        ApplyValues();
+    }
+
+    private void ApplyValues()
+    {
+        _freecamController.Speed = _generalSettingsMenu.Speed;
+        _freecamController.FastMultiplier = _generalSettingsMenu.FastMultiplier;
+        
+        _camera.fieldOfView = _cameraSettingsMenu.FieldOfView;
+        _camera.nearClipPlane = _cameraSettingsMenu.NearClip;
+    }
+
+    private void SaveValues()
+    {
+        _config.NoHmd = _generalSettingsMenu.NoHmd;
+        _config.Speed = _generalSettingsMenu.Speed;
+        _config.FastMultiplier = _generalSettingsMenu.FastMultiplier;
+
+        _config.FieldOfView = _cameraSettingsMenu.FieldOfView;
+        _config.NearClip = _cameraSettingsMenu.NearClip;
     }
 }

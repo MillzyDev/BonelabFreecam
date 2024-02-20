@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Freecam.Configuration;
 using MelonLoader;
 using UnityEngine;
@@ -6,16 +9,62 @@ using UnityEngine;
 namespace Freecam.IMGUI;
 
 [RegisterTypeInIl2Cpp]
-internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr)
+internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INotifyPropertyChanged
 {
     private Config _config = null!;
+    private string _fastMultiplierString = string.Empty;
+    private float _fastMultiplierValue;
     private FreecamHostManager _freecamHostManager = null!;
 
     private bool _noHmdToggle;
     private string _speedString = string.Empty;
     private float _speedValue;
-    private string _fastMultiplierString = string.Empty;
-    private float _fastMultiplierValue;
+
+    public bool NoHmd
+    {
+        get => _noHmdToggle;
+        set => SetField(ref _noHmdToggle, value);
+    }
+
+    public float Speed
+    {
+        get => _speedValue;
+        set
+        {
+            SetField(ref _speedValue, value);
+            _speedString = value.ToString("F");
+        }
+    }
+
+    public float FastMultiplier
+    {
+        get => _fastMultiplierValue;
+        set
+        {
+            SetField(ref _fastMultiplierValue, value);
+            _fastMultiplierString = value.ToString("F");
+        }
+    }
+
+    private string SpeedString
+    {
+        set
+        {
+            if (!SetField(ref _speedString, value, true)) return;
+
+            if (float.TryParse(value, out float speed)) Speed = speed;
+        }
+    }
+
+    private string FastMultiplierString
+    {
+        set
+        {
+            if (!SetField(ref _fastMultiplierString, value, true)) return;
+
+            if (float.TryParse(value, out float fastMultiplier)) FastMultiplier = fastMultiplier;
+        }
+    }
 
     private void Awake()
     {
@@ -37,56 +86,35 @@ internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr)
 
         bool freecamEnabled = _config.FreecamEnabled;
         if (GUI.Button(new Rect(15f, 60f, 190f, 20f), freecamEnabled ? "Disable Freecam (F)" : "Enable Freecam (F)"))
-        {
             _freecamHostManager.ToggleFreecam();
-        }
 
-        _noHmdToggle = GUI.Toggle(new Rect(15f, 85f, 190f, 20f), _noHmdToggle, "No HMD Mode");
+        NoHmd = GUI.Toggle(new Rect(15f, 85f, 190f, 20f), _noHmdToggle, "No HMD Mode");
 
         GUI.Label(new Rect(15f, 110f, 190f, 20f), "Speed:");
-        _speedString = GUI.TextField(new Rect(150f, 110f, 60f, 20f), _speedString);
-        _speedValue = GUI.HorizontalSlider(new Rect(15f, 130f, 190f, 20f), _speedValue, 0.1f, 40f);
-        
+        SpeedString = GUI.TextField(new Rect(150f, 110f, 60f, 20f), _speedString);
+        Speed = GUI.HorizontalSlider(new Rect(15f, 130f, 190f, 20f), _speedValue, 0.1f, 40f);
+
         GUI.Label(new Rect(15f, 155f, 190f, 20f), "Fast Multiplier:");
-        _fastMultiplierString = GUI.TextField(new Rect(150f, 155f, 60f, 20f), _fastMultiplierString);
-        _fastMultiplierValue = GUI.HorizontalSlider(new Rect(15f, 180f, 190f, 20f), _fastMultiplierValue, 1.5f, 20f);
+        FastMultiplierString = GUI.TextField(new Rect(150f, 155f, 60f, 20f), _fastMultiplierString);
+        FastMultiplier = GUI.HorizontalSlider(new Rect(15f, 180f, 190f, 20f), _fastMultiplierValue, 1.5f, 20f);
     }
 
-    private void Update()
-    {
-        if (_noHmdToggle != _config.NoHmd)
-        {
-            _config.NoHmd = _noHmdToggle;
-        }
-        
-        if (Math.Abs(_speedValue - _config.Speed) > 0.01f)
-        {
-            _config.Speed = _speedValue;
-            _speedString = $"{_speedValue:F}";
-        }
-        
-        if (float.TryParse(_speedString, out float speed))
-        {
-            _speedValue = speed;
-        }
-        else
-        {
-            _speedString = $"{_speedValue:F}";
-        }
-        
-        if (Math.Abs(_fastMultiplierValue - _config.FastMultiplier) > 0.01f)
-        {
-            _config.FastMultiplier = _fastMultiplierValue;
-            _fastMultiplierString = $"{_fastMultiplierValue:F}";
-        }
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-        if (float.TryParse(_fastMultiplierString, out float fastMultiplier))
-        {
-            _fastMultiplierValue = fastMultiplier;
-        }
-        else
-        {
-            _fastMultiplierString = $"{_fastMultiplierValue:F}";
-        }
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private bool SetField<T>(ref T field, T value, bool dontFire = false,
+        [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+
+        if (!dontFire)
+            OnPropertyChanged(propertyName);
+
+        return true;
     }
 }
