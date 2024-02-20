@@ -39,7 +39,7 @@ internal sealed class CameraSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INoti
     {
         set
         {
-            if (!SetField(ref _fieldOfViewString, value, true)) return;
+            if (!SetField(ref _fieldOfViewString, value, dontFire: true)) return;
 
             if (float.TryParse(value, out float fieldOfView)) FieldOfView = fieldOfView;
         }
@@ -49,7 +49,7 @@ internal sealed class CameraSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INoti
     {
         set
         {
-            if (!SetField(ref _nearClipString, value, true)) return;
+            if (!SetField(ref _nearClipString, value, dontFire: true)) return;
 
             if (float.TryParse(value, out float nearClip)) NearClip = nearClip;
         }

@@ -50,7 +50,7 @@ internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INot
     {
         set
         {
-            if (!SetField(ref _speedString, value, true)) return;
+            if (!SetField(ref _speedString, value, dontFire: true)) return;
 
             if (float.TryParse(value, out float speed)) Speed = speed;
         }
@@ -60,7 +60,7 @@ internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INot
     {
         set
         {
-            if (!SetField(ref _fastMultiplierString, value, true)) return;
+            if (!SetField(ref _fastMultiplierString, value,  dontFire: true)) return;
 
             if (float.TryParse(value, out float fastMultiplier)) FastMultiplier = fastMultiplier;
         }
