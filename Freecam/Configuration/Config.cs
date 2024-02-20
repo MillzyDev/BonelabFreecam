@@ -13,7 +13,7 @@ internal sealed class Config
     private readonly MelonPreferences_Entry<bool> _showConfigMenu;
     private readonly MelonPreferences_Entry<float> _speed;
     private readonly MelonPreferences_Entry<float> _fastMultiplier;
-    private readonly MelonPreferences_Entry<int> _fieldOfView;
+    private readonly MelonPreferences_Entry<float> _fieldOfView;
     private readonly MelonPreferences_Entry<float> _nearClip;
     
     private Config()
@@ -25,7 +25,7 @@ internal sealed class Config
         _showConfigMenu = _config.CreateEntry("bShowConfigMenu", true);
         _speed = _config.CreateEntry("fNormalSpeed", 10f);
         _fastMultiplier = _config.CreateEntry("fFastMultiplier", 10f);
-        _fieldOfView = _config.CreateEntry("nFieldOfView", 90);
+        _fieldOfView = _config.CreateEntry("fFieldOfView", 90f);
         _nearClip = _config.CreateEntry("fNearClip", 0.3f);
     }
 
@@ -64,7 +64,7 @@ internal sealed class Config
         set => _fastMultiplier.Value = value;
     }
 
-    public int FieldOfView
+    public float FieldOfView
     {
         get => _fieldOfView.Value;
         set => _fieldOfView.Value = value;
