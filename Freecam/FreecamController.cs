@@ -9,17 +9,21 @@ namespace Freecam;
 internal sealed class FreecamController(IntPtr ptr) : MonoBehaviour(ptr)
 {
     private Vector3 _lastMousePosition = Vector3.zero;
-    private Config _config = null!;
+
+    [NonSerialized] public float Speed;
+    [NonSerialized] public float FastMultiplier;
 
     private void Awake()
     { 
-        _config = Config.Instance;
+        var config = Config.Instance;
+        Speed = config.Speed;
+        FastMultiplier = config.FastMultiplier;
     }
 
     private void Update()
     {
-        float speed = _config.Speed * Time.deltaTime;
-        float fastMultiplier = _config.FastMultiplier;
+        float speed = Speed * Time.deltaTime;
+        float fastMultiplier = FastMultiplier;
 
         // fast mode
         if (Input.GetKey(KeyCode.LeftShift))
