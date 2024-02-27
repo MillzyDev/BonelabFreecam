@@ -16,6 +16,7 @@ internal sealed class Config
     private readonly MelonPreferences_Entry<float> _cameraSensitivity;
     private readonly MelonPreferences_Entry<float> _fieldOfView;
     private readonly MelonPreferences_Entry<float> _nearClip;
+    private readonly MelonPreferences_Entry<int> _cullingMask;
     
     private Config()
     {
@@ -29,6 +30,7 @@ internal sealed class Config
         _cameraSensitivity = _config.CreateEntry("fLookSensitivity", 0.3f);
         _fieldOfView = _config.CreateEntry("fFieldOfView", 90f);
         _nearClip = _config.CreateEntry("fNearClip", 0.3f);
+        _cullingMask = _config.CreateEntry("iCullingMask", -1);
     }
 
     public static Config Instance
@@ -82,6 +84,12 @@ internal sealed class Config
     {
         get => _nearClip.Value;
         set => _nearClip.Value = value;
+    }
+
+    public int CullingMask
+    {
+        get => _cullingMask.Value;
+        set => _cullingMask.Value = value;
     }
 
     public void Save()
