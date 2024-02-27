@@ -13,6 +13,7 @@ internal sealed class Config
     private readonly MelonPreferences_Entry<bool> _showConfigMenu;
     private readonly MelonPreferences_Entry<float> _speed;
     private readonly MelonPreferences_Entry<float> _fastMultiplier;
+    private readonly MelonPreferences_Entry<float> _cameraSensitivity;
     private readonly MelonPreferences_Entry<float> _fieldOfView;
     private readonly MelonPreferences_Entry<float> _nearClip;
     
@@ -25,6 +26,7 @@ internal sealed class Config
         _showConfigMenu = _config.CreateEntry("bShowConfigMenu", true);
         _speed = _config.CreateEntry("fNormalSpeed", 10f);
         _fastMultiplier = _config.CreateEntry("fFastMultiplier", 10f);
+        _cameraSensitivity = _config.CreateEntry("fLookSensitivity", 0.3f);
         _fieldOfView = _config.CreateEntry("fFieldOfView", 90f);
         _nearClip = _config.CreateEntry("fNearClip", 0.3f);
     }
@@ -62,6 +64,12 @@ internal sealed class Config
     {
         get => _fastMultiplier.Value;
         set => _fastMultiplier.Value = value;
+    }
+
+    public float CameraSensitivity
+    {
+        get => _cameraSensitivity.Value;
+        set => _cameraSensitivity.Value = value;
     }
 
     public float FieldOfView

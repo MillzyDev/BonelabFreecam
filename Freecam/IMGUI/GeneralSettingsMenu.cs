@@ -14,6 +14,8 @@ internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INot
     private Config _config = null!;
     private string _fastMultiplierString = string.Empty;
     private float _fastMultiplierValue;
+    private string _cameraSensitivityString = string.Empty;
+    private float _cameraSensitivityValue;
     private FreecamHostManager _freecamHostManager = null!;
 
     private bool _noHmdToggle;
@@ -46,6 +48,16 @@ internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INot
         }
     }
 
+    public float CameraSensitivity
+    {
+        get => _cameraSensitivityValue;
+        set
+        {
+            SetField(ref _cameraSensitivityValue, value);
+            _cameraSensitivityString = value.ToString("F");
+        }
+    }
+
     private string SpeedString
     {
         set
@@ -60,9 +72,19 @@ internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INot
     {
         set
         {
-            if (!SetField(ref _fastMultiplierString, value,  dontFire: true)) return;
+            if (!SetField(ref _fastMultiplierString, value, dontFire: true)) return;
 
             if (float.TryParse(value, out float fastMultiplier)) FastMultiplier = fastMultiplier;
+        }
+    }
+
+    private string CameraSensitivityString
+    {
+        set
+        {
+            if (!SetField(ref _cameraSensitivityString, value, dontFire: true)) return;
+
+            if (float.TryParse(value, out float cameraSensitivity)) CameraSensitivity = cameraSensitivity;
         }
     }
 
@@ -73,6 +95,7 @@ internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INot
         _noHmdToggle = _config.NoHmd;
         _speedValue = _config.Speed;
         _fastMultiplierValue = _config.FastMultiplier;
+        _cameraSensitivityValue = _config.CameraSensitivity;
     }
 
     private void Start()
@@ -97,6 +120,10 @@ internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INot
         GUI.Label(new Rect(15f, 155f, 190f, 20f), "Fast Multiplier:");
         FastMultiplierString = GUI.TextField(new Rect(150f, 155f, 60f, 20f), _fastMultiplierString);
         FastMultiplier = GUI.HorizontalSlider(new Rect(15f, 180f, 190f, 20f), _fastMultiplierValue, 1.5f, 20f);
+        
+        GUI.Label(new Rect(15f, 200f, 190f, 20f), "Camera Sensitivity");
+        CameraSensitivityString = GUI.TextField(new Rect(150f, 200f, 60f, 20f), _cameraSensitivityString);
+        CameraSensitivity = GUI.HorizontalSlider(new Rect(15f, 225f, 190f, 20f), _cameraSensitivityValue, 0.01f, 1f);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

@@ -62,6 +62,7 @@ public class FreecamMenu(IntPtr ptr) : MonoBehaviour(ptr)
     {
         _freecamController.Speed = _generalSettingsMenu.Speed;
         _freecamController.FastMultiplier = _generalSettingsMenu.FastMultiplier;
+        _freecamController.CameraSensitivity = _generalSettingsMenu.CameraSensitivity;
         
         _camera.fieldOfView = _cameraSettingsMenu.FieldOfView;
         _camera.nearClipPlane = _cameraSettingsMenu.NearClip;
@@ -72,6 +73,7 @@ public class FreecamMenu(IntPtr ptr) : MonoBehaviour(ptr)
         _config.NoHmd = _generalSettingsMenu.NoHmd;
         _config.Speed = _generalSettingsMenu.Speed;
         _config.FastMultiplier = _generalSettingsMenu.FastMultiplier;
+        _config.CameraSensitivity = _generalSettingsMenu.CameraSensitivity;
 
         _config.FieldOfView = _cameraSettingsMenu.FieldOfView;
         _config.NearClip = _cameraSettingsMenu.NearClip;

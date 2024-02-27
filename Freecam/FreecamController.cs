@@ -12,18 +12,22 @@ internal sealed class FreecamController(IntPtr ptr) : MonoBehaviour(ptr)
 
     [NonSerialized] public float Speed;
     [NonSerialized] public float FastMultiplier;
+    [NonSerialized] public float CameraSensitivity;
 
     private void Awake()
     { 
         var config = Config.Instance;
+        
         Speed = config.Speed;
         FastMultiplier = config.FastMultiplier;
+        CameraSensitivity = config.CameraSensitivity;
     }
 
     private void Update()
     {
         float speed = Speed * Time.deltaTime;
         float fastMultiplier = FastMultiplier;
+        float cameraSensitivity = CameraSensitivity;
 
         // fast mode
         if (Input.GetKey(KeyCode.LeftShift))
@@ -67,8 +71,8 @@ internal sealed class FreecamController(IntPtr ptr) : MonoBehaviour(ptr)
             Vector3 mouseDisplacement = Input.mousePosition - _lastMousePosition;
 
             Vector3 localEulerAngles = transform.localEulerAngles;
-            float thetaX = localEulerAngles.y + mouseDisplacement.x * 0.3f;
-            float thetaY = localEulerAngles.x - mouseDisplacement.y * 0.3f;
+            float thetaX = localEulerAngles.y + mouseDisplacement.x * cameraSensitivity;
+            float thetaY = localEulerAngles.x - mouseDisplacement.y * cameraSensitivity;
 
             cameraTransform.localEulerAngles = new Vector3(thetaY, thetaX, 0f);
         }
