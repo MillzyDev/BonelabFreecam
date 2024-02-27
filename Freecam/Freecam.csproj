@@ -107,6 +107,7 @@
         <Compile Include="IMGUI\CameraSettingsMenu.cs" />
         <Compile Include="IMGUI\FreecamMenu.cs" />
         <Compile Include="IMGUI\GeneralSettingsMenu.cs" />
+        <Compile Include="IMGUI\LayerSettingsMenu.cs" />
         <Compile Include="Mod.cs" />
         <Compile Include="PatchManager.cs" />
         <Compile Include="Properties/AssemblyInfo.cs" />

@@ -15,6 +15,7 @@ public class FreecamMenu(IntPtr ptr) : MonoBehaviour(ptr)
     private FreecamController _freecamController = null!;
     private GeneralSettingsMenu _generalSettingsMenu = null!;
     private CameraSettingsMenu _cameraSettingsMenu = null!;
+    private LayerSettingsMenu _layerSettingsMenu = null!;
     
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class FreecamMenu(IntPtr ptr) : MonoBehaviour(ptr)
         
         _generalSettingsMenu = gameObject.AddComponent<GeneralSettingsMenu>();
         _cameraSettingsMenu = gameObject.AddComponent<CameraSettingsMenu>();
+        _layerSettingsMenu = gameObject.AddComponent<LayerSettingsMenu>();
 
         _generalSettingsMenu.PropertyChanged += PropertyChanged;
         _cameraSettingsMenu.PropertyChanged += PropertyChanged;
