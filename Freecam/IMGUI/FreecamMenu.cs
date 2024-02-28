@@ -39,13 +39,14 @@ public class FreecamMenu(IntPtr ptr) : MonoBehaviour(ptr)
 
     private void OnGUI()
     {
-        GUI.Box(new Rect(10f, 10f, 620f, 25f) ,"Freecam Menu (F1 to Show/Hide)");
+        GUI.Box(new Rect(10f, 10f, 610f, 25f) ,"Freecam Menu (F1 to Show/Hide)");
     }
 
     private void OnEnable()
     {
         _generalSettingsMenu.enabled = true;
         _cameraSettingsMenu.enabled = true;
+        _layerSettingsMenu.enabled = true;
     }
 
     private void OnDisable()
@@ -54,6 +55,7 @@ public class FreecamMenu(IntPtr ptr) : MonoBehaviour(ptr)
         
         _generalSettingsMenu.enabled = false;
         _cameraSettingsMenu.enabled = false;
+        _layerSettingsMenu.enabled = false;
     }
 
     private void PropertyChanged(object sender, PropertyChangedEventArgs args)
