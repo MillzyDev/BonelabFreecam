@@ -68,6 +68,8 @@ public class FreecamMenu(IntPtr ptr) : MonoBehaviour(ptr)
         
         _camera.fieldOfView = _cameraSettingsMenu.FieldOfView;
         _camera.nearClipPlane = _cameraSettingsMenu.NearClip;
+
+        _camera.cullingMask = _layerSettingsMenu.CullingMask;
     }
 
     private void SaveValues()
@@ -79,5 +81,7 @@ public class FreecamMenu(IntPtr ptr) : MonoBehaviour(ptr)
 
         _config.FieldOfView = _cameraSettingsMenu.FieldOfView;
         _config.NearClip = _cameraSettingsMenu.NearClip;
+
+        _config.CullingMask = _layerSettingsMenu.CullingMask;
     }
 }
