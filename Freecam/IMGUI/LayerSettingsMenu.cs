@@ -43,8 +43,6 @@ internal sealed class LayerSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INotif
         /* _scrollPosition =
             GUI.BeginScrollView(new Rect(425f, 60f, 190f, 290f), _scrollPosition, new Rect(0f, 0f, 185f, 960f));
             */
-
-        Il2CppSystem.Array
         
         for (int layer = 0; layer < 32; layer++)
         {
