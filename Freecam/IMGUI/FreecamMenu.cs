@@ -39,7 +39,7 @@ public class FreecamMenu(IntPtr ptr) : MonoBehaviour(ptr)
 
     private void OnGUI()
     {
-        GUI.Box(new Rect(10f, 10f, 600f, 25f) ,"Freecam Menu (F1 to Show/Hide)");
+        GUI.Box(new Rect(10f, 10f, 620f, 25f) ,"Freecam Menu (F1 to Show/Hide)");
     }
 
     private void OnEnable()
