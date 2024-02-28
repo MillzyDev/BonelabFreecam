@@ -54,11 +54,11 @@ internal sealed class LayerSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INotif
 
             if (toggleEnabled)
             {
-                _cullingMask |= currentLayer;
+                CullingMask |= currentLayer;
             }
             else
             {
-                _cullingMask &= ~currentLayer;
+                CullingMask &= ~currentLayer;
             }
         }
         

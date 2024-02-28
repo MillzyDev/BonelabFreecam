@@ -29,6 +29,7 @@ public class FreecamMenu(IntPtr ptr) : MonoBehaviour(ptr)
 
         _generalSettingsMenu.PropertyChanged += PropertyChanged;
         _cameraSettingsMenu.PropertyChanged += PropertyChanged;
+        _layerSettingsMenu.PropertyChanged += PropertyChanged;
     }
 
     private void Start()
