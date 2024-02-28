@@ -12,7 +12,7 @@ namespace Freecam.IMGUI;
 internal sealed class LayerSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INotifyPropertyChanged
 {
     private int _cullingMask;
-    private Vector2 _scrollPosition = new(0f, 0f);
+    //private Vector2 _scrollPosition = new(0f, 0f);
     private string[] _layerNames = null!;
 
     public int CullingMask
@@ -30,8 +30,14 @@ internal sealed class LayerSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INotif
         List<string> layerNames = [];
         for (int layer = 0; layer < 32; layer++)
         {
-            layerNames.Add(LayerMask.LayerToName(layer));
-            MelonLogger.Msg($"Layer is empty str: {LayerMask.LayerToName(layer) == string.Empty}");
+            string layerName = LayerMask.LayerToName(layer);
+            if (layerName == string.Empty)
+            {
+                layerName = string.Concat("Layer ", layer);
+            }
+                
+            layerNames.Add(layerName);
+            //MelonLogger.Msg($"Layer is empty str: {LayerMask.LayerToName(layer) == string.Empty}");
         }
 
         _layerNames = layerNames.ToArray();
