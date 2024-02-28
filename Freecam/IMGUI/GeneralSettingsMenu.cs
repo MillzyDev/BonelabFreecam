@@ -17,6 +17,7 @@ internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INot
     private string _cameraSensitivityString = string.Empty;
     private float _cameraSensitivityValue;
     private FreecamHostManager _freecamHostManager = null!;
+    private LayerSettingsMenu _layerSettingsMenu = null!;
 
     private bool _noHmdToggle;
     private string _speedString = string.Empty;
@@ -101,6 +102,7 @@ internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INot
     private void Start()
     {
         _freecamHostManager = GetComponent<FreecamHostManager>();
+        _layerSettingsMenu = GetComponent<LayerSettingsMenu>();
     }
 
     private void OnGUI()
@@ -109,7 +111,9 @@ internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INot
 
         bool freecamEnabled = _config.FreecamEnabled;
         if (GUI.Button(new Rect(15f, 60f, 190f, 20f), freecamEnabled ? "Disable Freecam (F)" : "Enable Freecam (F)"))
+        {
             _freecamHostManager.ToggleFreecam();
+        }
 
         NoHmd = GUI.Toggle(new Rect(15f, 85f, 190f, 20f), _noHmdToggle, "No HMD Mode");
 
@@ -124,6 +128,16 @@ internal sealed class GeneralSettingsMenu(IntPtr ptr) : MonoBehaviour(ptr), INot
         GUI.Label(new Rect(15f, 200f, 190f, 20f), "Camera Sensitivity");
         CameraSensitivityString = GUI.TextField(new Rect(150f, 200f, 60f, 20f), _cameraSensitivityString);
         CameraSensitivity = GUI.HorizontalSlider(new Rect(15f, 225f, 190f, 20f), _cameraSensitivityValue, 0.01f, 1f);
+
+        if (GUI.Button(new Rect(15f, 250f, 190f, 20f), "Show All Layers"))
+        {
+            _layerSettingsMenu.CullingMask = -1;
+        }
+
+        if (GUI.Button(new Rect(15f, 275f, 190f, 20f), "Hide All Layers"))
+        {
+            _layerSettingsMenu.CullingMask = 0;
+        }
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
