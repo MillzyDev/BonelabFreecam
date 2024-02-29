@@ -100,7 +100,7 @@
         <Compile Include="Configuration\Config.cs" />
         <Compile Include="FreecamController.cs" />
         <Compile Include="FreecamHostManager.cs" />
-        <Compile Include="HarmonyPatches\OpenControllerRig_OnStart.cs" />
+        <Compile Include="HarmonyPatches\OpenControllerRig_OnEarlyUpdate.cs" />
         <Compile Include="HarmonyPatches\RigManager_Start.cs" />
         <Compile Include="HarmonyPatches\XRApi_InitializeXRLoader.cs" />
         <Compile Include="HarmonyPatches\XRHMD_get_IsUserPresent.cs" />
