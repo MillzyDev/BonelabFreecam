@@ -5,8 +5,8 @@ using SLZ.Rig;
 namespace Freecam.HarmonyPatches;
 
 [HarmonyPatch(typeof(OpenControllerRig))]
-[HarmonyPatch(nameof(OpenControllerRig.OnEarlyUpdate))]
-internal static class OpenControllerRig_OnEarlyUpdate
+[HarmonyPatch(nameof(OpenControllerRig.OnStart))]
+internal static class OpenControllerRig_OnStart
 {
     [HarmonyPostfix]
     // ReSharper disable once InconsistentNaming
