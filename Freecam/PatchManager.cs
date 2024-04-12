@@ -39,16 +39,16 @@ internal sealed class PatchManager
     {
         Type xrApi = typeof(XRApi);
 
-        Type targetType = xrApi.GetNestedType("__c__DisplayClass50_0");
+        Type targetType = xrApi.GetNestedType("__c__DisplayClass50_0"); // steam
         MethodInfo targetMethod;
-        if (targetType == null)
+        if (targetType == null) // oculus
         {
             targetType = xrApi.GetNestedType("__c");
             targetMethod = targetType.GetMethod("_Initialize_b__45_0")!;
         }
         else
         {
-            targetMethod = targetType.GetMethod("_InitializeXRLoader_b__0")!;
+            targetMethod = targetType.GetMethod("_InitializeXRLoader_b__0")!; // steam
         }
         
         MethodInfo prefix = typeof(XRApi_InitializeXRLoader).GetMethod("Prefix", BindingFlags.Static | BindingFlags.Public)!;
