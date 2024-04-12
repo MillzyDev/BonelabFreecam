@@ -1,19 +1,19 @@
 ﻿using Freecam.Configuration;
 using HarmonyLib;
+using JetBrains.Annotations;
 using SLZ.Marrow.Input;
 
 namespace Freecam.HarmonyPatches;
 
-[HarmonyPatch(typeof(XRApi.__c__DisplayClass50_0))]
-[HarmonyPatch(nameof(XRApi.__c__DisplayClass50_0._InitializeXRLoader_b__0))]
+// ReSharper disable once UnusedType.Global
 internal static class XRApi_InitializeXRLoader
 {
     private static readonly Config s_config = Config.Instance;
     
-    [HarmonyPrefix]
+    // manually patched, since a single patch is not compatible for both the steam and oculus versions
+    // ReSharper disable once UnusedMember.Global
     // ReSharper disable once InconsistentNaming
-    // ReSharper disable once UnusedMember.Local
-    private static bool Prefix(ref bool __result)
+    public static bool Prefix(ref bool __result)
     {
         if (!s_config.NoHmd)
         {
