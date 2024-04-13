@@ -67,5 +67,9 @@ The distance the near clipping plane is from the camera. The distance at which o
 ### Layer Toggles
 Toggle the visibility of individual layers. Most objects are on the `Default` or `Static` layers.
 
+## This Software does not have a License
+And as such is under my full copyright. The source code is available for transparency.
+However, I do permit this code to be downloaded, modified and referenced for educational purposes, so long as modified versions are not republished in any capacity without my explicit permission.
+
 # Special Thanks
 * **Extraes** for letting me use their code from SkipXR.
